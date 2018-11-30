@@ -30,8 +30,8 @@ jobs:
           - v1-dependencies-
 
       - run:
-        name: install dependencies
-        command: yarn install
+          name: install dependencies
+          command: yarn install
 
       - save_cache:
           paths:
