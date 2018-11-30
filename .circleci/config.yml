@@ -37,6 +37,16 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      
+      - run:
+          name: Notify DatoCMS about the status of the job
+          command: 'curl -X POST --data-binary "{\"payload\": { \"branch\": \"$CIRCLE_BRANCH\", \"status\": \"failed\" } }" https://webhooks.datocms.com/YUcgabLZEm/deploy-results'
+          when: on_fail
+
+      - run:
+          name: Notify DatoCMS about the status of the job
+          command: 'curl -X POST --data-binary "{\"payload\": { \"branch\": \"$CIRCLE_BRANCH\", \"status\": \"success\" } }" https://webhooks.datocms.com/YUcgabLZEm/deploy-results'
+          when: on_success
   deploy:
     docker:
       - image: buildpack-deps:trusty
